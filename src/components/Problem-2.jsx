@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import services from "../services/contacts";
+import Search from "./search";
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 
@@ -45,6 +46,13 @@ const Problem2 = () => {
         }
     };
 
+    const searchFilter = ( query ) => {
+        const searchedContacts = checkFiltered.filter( ( contact ) =>
+            contact.phone.includes( query ),
+        );
+        setFiltered( searchedContacts );
+    };
+
     useEffect( () => {
         setFiltered( contacts );
         setCheckFiltered( contacts );
@@ -64,6 +72,9 @@ const Problem2 = () => {
                     <button className="btn btn-lg btn-outline-primary" type="button" value="all" onClick={ handleClick }>All Contacts</button>
                     <button className="btn btn-lg btn-outline-warning" type="button" value="United States" onClick={ handleClick }>US Contacts</button>
                 </div>
+
+                <div><Search searchFilter={ searchFilter } /></div>
+
                 <div>
                     <input type="checkbox" value="true" onChange={ handleCheck } />
                     <span> even id only</span>
